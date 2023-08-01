@@ -17,7 +17,7 @@ current_date = datetime.now().date()
 subject = st.selectbox("Select Subject", ("Network Security and Cryptography", "Data Mining and Data Warehousing", "Elective-4", "Elective-5"),key="subject_selector")
 
 # Set the default value of the date input widget to the current date
-selected_date = st.date_input("Select Date", value=current_date)
+selected_date = st.date_input("Select Date", value=current_date, key="date_selector")
 
 # Add your notes for the selected subject and date
 notes = st.text_area("Add Notes")
