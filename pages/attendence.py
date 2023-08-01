@@ -9,6 +9,11 @@ client = pymongo.MongoClient('mongodb+srv://aalok:aalok@cluster0.cgn9day.mongodb
 db = client['attendance_db']  # Replace 'attendance_db' with your preferred database name
 collection = db['attendance_data']
 
+# Check if the user is logged in before allowing access to the page
+if not st.session_state.logged_in:
+    st.error("You must log in first to access this page.")
+    st.stop()
+
 st.title("Update Your Attendance")
 
 # Get the current date from the device
@@ -25,6 +30,7 @@ attended = st.checkbox("Attended", value=False)
 # Save the attendance data to the database
 if st.button("Submit"):
     your_attendance_data = {
+        "email": st.session_state.current_user,
         "subject": subject,
         "date": selected_date.strftime("%Y-%m-%d"),
         "attended": attended,
@@ -36,7 +42,7 @@ if st.button("Submit"):
 
 # Add a button to download all your attendance data as a CSV file
 if st.button("Fetch All Attendance Data"):
-    your_attendance_data = collection.find()
+    your_attendance_data = collection.find({"email": st.session_state.current_user})
     all_data_list = list(your_attendance_data)
     if all_data_list:
         df = pd.DataFrame(all_data_list)
