@@ -1,4 +1,0 @@
-pandas==1.5.3
-pymongo==4.3.3
-streamlit==1.22.0
-~treamlit==1.21.0
